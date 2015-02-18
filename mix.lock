@@ -1,0 +1,8 @@
+%{"bson": {:hex, :bson, "0.4.2"},
+  "cowboy": {:hex, :cowboy, "1.0.0"},
+  "cowlib": {:hex, :cowlib, "1.0.1"},
+  "mongo": {:git, "git://github.com/checkiz/elixir-mongo.git", "e83763e78d4cd8404aa5303d16b2cd2d8d89ceb0", []},
+  "phoenix": {:hex, :phoenix, "0.9.0"},
+  "plug": {:hex, :plug, "0.10.0"},
+  "poison": {:hex, :poison, "1.3.1"},
+  "ranch": {:hex, :ranch, "1.0.0"}}
