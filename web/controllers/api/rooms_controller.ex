@@ -1,4 +1,4 @@
-defmodule ImHere.Api.Rooms do
+defmodule ImHere.Api.RoomsController do
   use Phoenix.Controller
 
   plug :action
