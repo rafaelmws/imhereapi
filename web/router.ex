@@ -12,6 +12,10 @@ defmodule ImHere.Router do
     plug :accepts, ~w(json)
   end
 
+  socket "/ws", ImHere.Channels do
+    channel "room:*", RoomChannel
+  end
+
   scope "/", ImHere do
     pipe_through :browser # Use the default browser stack
 
