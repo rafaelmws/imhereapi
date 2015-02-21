@@ -13,50 +13,30 @@
 </div>
 
 <script src="/js/phoenix.js" type="text/javascript"></script>
+<script src="/js/chatroom.js" type="text/javascript"></script>
 
 <script type="text/javascript">
   (function(window, Phoenix){
-    var socket = new Phoenix.Socket("ws://" + location.host + "/ws");
     var roomsList = document.getElementById("rooms");
     var messages = document.getElementById("messages");
     var send = document.getElementById("send");
-    var selectedChan = null;
-    var roomName = null;
+    var chatRoom = new ChatRoom();
 
     roomsList.addEventListener('change', function(e) {
       messages.innerHTML = "";
-      connectToRoom(this.value);
+      chatRoom.join(this.value, addMessage);
     });
 
     send.addEventListener('click', function (e) {
       var textMessage = document.getElementById('textMessage');
-      if (selectedChan) {
-        selectedChan.send("room:in", {
-          data: textMessage.value,
-          to: roomName,
-        })
-        textMessage.value = "";
-      }
+      chatRoom.send(textMessage.value);
+      textMessage.value = "";
     })
 
-
-    function connectToRoom(selected_room) {
-      if (roomName){
-        socket.leave(roomName);
-      }
-
-      roomName = "room:" + selected_room;
-
-      socket.join(roomName, null, function(chan){
-        selectedChan = chan;
-
-        chan.on(roomName, function (message) {
-          var li = document.createElement("li");
-          li.appendChild(document.createTextNode(message.data))
-          messages.appendChild(li);
-        });
-
-      });
+    function addMessage(message){
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode(message.data))
+      messages.appendChild(li);
     }
 
 
