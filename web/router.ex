@@ -26,6 +26,6 @@ defmodule ImHere.Router do
     pipe_through :api
 
     get "/rooms", RoomsController, :listRooms
-    get "/near", RoomsController, :near
+    get "/rooms/near", RoomsController, :near
   end
 end

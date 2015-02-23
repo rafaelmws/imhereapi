@@ -2,11 +2,25 @@
 defmodule ImHere.Models.Room do
 
   def listAll do
-    get_collection "rooms" |> Mongo.Collection.find
+    rooms = get_collection("rooms") |> Mongo.Collection.find
+    rooms
   end
 
-  def findNear(lat, lng) do
-    IO.puts "Lat e Lng" <> lat <> lng
+  def findNear(lat, lng, dist) do
+    geometry = %{ 
+      type: "Point", 
+      coordinates: [String.to_float(lng), String.to_float(lat)]
+    }
+  
+    near = %{ 
+      "$geometry": geometry, 
+      "$minDistance": 0, 
+      "$maxDistance": String.to_integer(dist)
+    }
+
+    collection = get_collection("rooms")
+    rooms = Mongo.Collection.find(collection, %{ location: %{ "$near": near} })
+    rooms
   end
 
   def room_to_json(room) do
